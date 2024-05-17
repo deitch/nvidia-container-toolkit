@@ -25,9 +25,7 @@ import (
 
 	cli "github.com/urfave/cli/v2"
 
-	chmod "github.com/NVIDIA/nvidia-container-toolkit/cmd/nvidia-cdi-hook/chmod"
-	symlinks "github.com/NVIDIA/nvidia-container-toolkit/cmd/nvidia-cdi-hook/create-symlinks"
-	ldcache "github.com/NVIDIA/nvidia-container-toolkit/cmd/nvidia-cdi-hook/update-ldcache"
+	"github.com/NVIDIA/nvidia-container-toolkit/cmd/nvidia-cdi-hook/commands"
 )
 
 // options defines the options that can be set for the CLI through config files,
@@ -84,11 +82,7 @@ func main() {
 	}
 
 	// Define the subcommands
-	c.Commands = []*cli.Command{
-		ldcache.NewCommand(logger),
-		symlinks.NewCommand(logger),
-		chmod.NewCommand(logger),
-	}
+	c.Commands = commands.New(logger)
 
 	// Run the CLI
 	err := c.Run(os.Args)
